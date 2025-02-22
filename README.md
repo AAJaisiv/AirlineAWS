@@ -1,7 +1,7 @@
 # AirlineAWS
 ## Airline Choice Prediction Using AWS
 
-### Coordinating Professor: Misuk Lee, Associate Professor, Department of Management
+### Coordinating Department: Misuk Lee, Department of Management
 
 ### Project Overview
 
