@@ -1,12 +1,14 @@
 """
-Workflow Orchestrator for AirlineAWS Project
+Workflow Orchestration
 
 This script is the air traffic controller for our data pipeline. It manages which
 tasks run when, makes sure dependencies are respected, and keeps everything moving
 smoothly. If you want to know how we keep chaos at bay, this is the place.
 
-Author: A Abhinav Jaisiv
-Date: 2025
+---
+Hey there! If you're reading this, you're probably curious about how we keep our AWS data pipeline from turning into a mid-air collision. This file is the brains of the operation: it figures out what runs when, makes sure nothing steps on anything else's toes, and generally keeps the whole show on the rails (or, uh, in the air?).
+
+You'll find a mix of classes, enums, and a main() that shows off how to use it. Comments are written like I'm talking to you at the whiteboard. If you spot something weird, it's probably because I was trying to make this as clear as possible for the next person (hi, recruiter!).
 """
 
 import os
@@ -26,10 +28,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # Set up logging so we can see what's happening in the control tower
 logger = logging.getLogger(__name__)
 
+# --- ENUMS ---
 class WorkflowStatus(Enum):
-    """
-    Represents the state of a workflow—pending, running, done, etc.
-    """
+    # Workflow can be waiting, running, done, failed, or cancelled
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -37,20 +38,17 @@ class WorkflowStatus(Enum):
     CANCELLED = "cancelled"
 
 class TaskStatus(Enum):
-    """
-    Represents the state of a task—pending, running, done, etc.
-    """
+    # Same idea, but for individual tasks
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
     SKIPPED = "skipped"
 
+# --- DATA CLASSES ---
 @dataclass
 class TaskDefinition:
-    """
-    Defines what a task is, what it depends on, and how it should behave.
-    """
+    # What is this task? What does it depend on? How should it behave?
     task_id: str
     task_name: str
     function_name: str
@@ -63,9 +61,7 @@ class TaskDefinition:
 
 @dataclass
 class TaskExecution:
-    """
-    Tracks the status and results of a single task run.
-    """
+    # Tracks how a single run of a task went
     task_id: str
     status: TaskStatus
     start_time: Optional[datetime] = None
@@ -77,41 +73,36 @@ class TaskExecution:
 
 @dataclass
 class WorkflowExecution:
-    """
-    Tracks the status and results of a workflow run.
-    """
+    # Tracks a whole workflow run
     workflow_id: str
     workflow_name: str
     status: WorkflowStatus
     start_time: datetime
     end_time: Optional[datetime] = None
     duration_seconds: Optional[float] = None
-    tasks: Dict[str, TaskExecution]
-    parameters: Dict[str, Any]
+    tasks: Dict[str, TaskExecution] = None
+    parameters: Dict[str, Any] = None
     error_message: Optional[str] = None
 
+# --- MAIN ORCHESTRATOR CLASS ---
 class WorkflowOrchestrator:
     """
     This class is our pipeline's air traffic controller. It registers tasks, builds workflows,
     checks dependencies, and makes sure everything runs in the right order.
     """
     def __init__(self, config_path: str = "config/config.yaml"):
-        """
-        Loads config, sets up S3, and gets ready to orchestrate.
-        """
+        # Load config, set up S3, and get ready to orchestrate
         self.config = self._load_config(config_path)
         self.s3_client = boto3.client('s3')
         self.workflows_bucket = self.config['aws']['s3']['logs_bucket']
         self.max_concurrent_tasks = self.config['orchestration']['max_concurrent_tasks']
-        self.task_registry = {}
-        self.active_executions = {}
-        self.execution_history = []
+        self.task_registry = {}  # All known tasks
+        self.active_executions = {}  # Workflows currently running
+        self.execution_history = []  # All finished workflows
         logger.info("Workflow Orchestrator is ready to direct traffic!")
 
     def _load_config(self, config_path: str) -> Dict[str, Any]:
-        """
-        Loads YAML config. If it fails, we want to know why.
-        """
+        # Load YAML config. If it fails, we want to know why.
         try:
             with open(config_path, 'r') as file:
                 config = yaml.safe_load(file)
@@ -126,9 +117,7 @@ class WorkflowOrchestrator:
 
     def register_task(self, task_id: str, task_name: str, function: Callable, dependencies: List[str] = None,
                      timeout_seconds: int = 3600, retry_count: int = 3, retry_delay_seconds: int = 60, required: bool = True):
-        """
-        Registers a task with the orchestrator. Think of this as adding a new flight to the schedule.
-        """
+        # Register a task with the orchestrator. Think of this as adding a new flight to the schedule.
         if dependencies is None:
             dependencies = []
         task_def = TaskDefinition(
@@ -148,9 +137,7 @@ class WorkflowOrchestrator:
         logger.info(f"Registered task: {task_id} ({task_name})")
 
     def create_workflow(self, workflow_name: str, task_ids: List[str], parameters: Dict[str, Any] = None) -> str:
-        """
-        Creates a new workflow definition and saves it to S3.
-        """
+        # Create a new workflow definition and save it to S3
         if parameters is None:
             parameters = {}
         workflow_id = f"{workflow_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -177,9 +164,7 @@ class WorkflowOrchestrator:
             raise
 
     def _validate_workflow_dependencies(self, task_ids: List[str]):
-        """
-        Checks that all tasks are registered and dependencies make sense (no cycles, no missing tasks).
-        """
+        # Make sure all tasks are registered and dependencies make sense (no cycles, no missing tasks)
         for task_id in task_ids:
             if task_id not in self.task_registry:
                 raise ValueError(f"Task {task_id} is not registered")
@@ -191,9 +176,7 @@ class WorkflowOrchestrator:
         self._check_circular_dependencies(task_ids)
 
     def _check_circular_dependencies(self, task_ids: List[str]):
-        """
-        Uses DFS to make sure there are no circular dependencies (no flights chasing their own tail).
-        """
+        # DFS to make sure there are no circular dependencies (no flights chasing their own tail)
         visited = set()
         rec_stack = set()
         def dfs(task_id):
@@ -214,9 +197,7 @@ class WorkflowOrchestrator:
                     raise ValueError(f"Circular dependency detected in workflow")
 
     def execute_workflow(self, workflow_id: str, parameters: Dict[str, Any] = None) -> WorkflowExecution:
-        """
-        Runs a workflow: loads its definition, executes tasks in order, and tracks results.
-        """
+        # Actually run a workflow: load its definition, execute tasks in order, and track results
         if parameters is None:
             parameters = {}
         logger.info(f"Starting workflow execution: {workflow_id}")
@@ -258,9 +239,7 @@ class WorkflowOrchestrator:
         return execution
 
     def _load_workflow_definition(self, workflow_id: str) -> Dict[str, Any]:
-        """
-        Loads a workflow definition from S3.
-        """
+        # Load a workflow definition from S3
         try:
             key = f"workflows/{workflow_id}/workflow_definition.json"
             response = self.s3_client.get_object(
@@ -273,9 +252,7 @@ class WorkflowOrchestrator:
             raise
 
     def _execute_workflow_tasks(self, execution: WorkflowExecution):
-        """
-        Runs all tasks in the workflow, respecting dependencies and retries.
-        """
+        # Run all tasks in the workflow, respecting dependencies and retries
         workflow_def = self._load_workflow_definition(execution.workflow_id)
         task_ids = workflow_def['task_ids']
         execution_order = self._create_execution_order(task_ids)
@@ -321,9 +298,7 @@ class WorkflowOrchestrator:
                 break
 
     def _create_execution_order(self, task_ids: List[str]) -> List[str]:
-        """
-        Figures out the right order to run tasks, based on dependencies (topological sort).
-        """
+        # Figure out the right order to run tasks, based on dependencies (topological sort)
         in_degree = {task_id: 0 for task_id in task_ids}
         graph = {task_id: [] for task_id in task_ids}
         for task_id in task_ids:
@@ -346,9 +321,7 @@ class WorkflowOrchestrator:
         return order
 
     def _dependencies_satisfied(self, task_id: str, execution: WorkflowExecution) -> bool:
-        """
-        Checks if all dependencies for a task are done before running it.
-        """
+        # Check if all dependencies for a task are done before running it
         task_def = self.task_registry[task_id]['definition']
         for dep_id in task_def.dependencies:
             dep_execution = execution.tasks.get(dep_id)
@@ -357,9 +330,7 @@ class WorkflowOrchestrator:
         return True
 
     def _all_required_tasks_completed(self, execution: WorkflowExecution) -> bool:
-        """
-        Checks if all required tasks finished successfully.
-        """
+        # Check if all required tasks finished successfully
         for task_execution in execution.tasks.values():
             task_def = self.task_registry[task_execution.task_id]['definition']
             if task_def.required and task_execution.status != TaskStatus.COMPLETED:
@@ -367,9 +338,7 @@ class WorkflowOrchestrator:
         return True
 
     def _save_execution_result(self, execution: WorkflowExecution):
-        """
-        Saves the results of a workflow run to S3.
-        """
+        # Save the results of a workflow run to S3
         try:
             key = f"workflows/{execution.workflow_id}/execution_result.json"
             execution_dict = {
@@ -405,9 +374,7 @@ class WorkflowOrchestrator:
             logger.error(f"Failed to save execution result: {e}")
 
     def get_workflow_status(self, workflow_id: str) -> Optional[WorkflowExecution]:
-        """
-        Returns the current status of a workflow (if running or in history).
-        """
+        # Return the current status of a workflow (if running or in history)
         if workflow_id in self.active_executions:
             return self.active_executions[workflow_id]
         for execution in self.execution_history:
@@ -416,9 +383,7 @@ class WorkflowOrchestrator:
         return None
 
     def cancel_workflow(self, workflow_id: str) -> bool:
-        """
-        Cancels a running workflow (sets status, stops running tasks).
-        """
+        # Cancel a running workflow (sets status, stops running tasks)
         if workflow_id not in self.active_executions:
             logger.warning(f"Workflow {workflow_id} is not running")
             return False
@@ -436,9 +401,7 @@ class WorkflowOrchestrator:
         return True
 
     def list_workflows(self) -> List[Dict[str, Any]]:
-        """
-        Lists all workflows stored in S3.
-        """
+        # List all workflows stored in S3
         workflows = []
         try:
             response = self.s3_client.list_objects_v2(
@@ -463,6 +426,7 @@ class WorkflowOrchestrator:
             logger.error(f"Failed to list workflows: {e}")
         return workflows
 
+# --- MAIN SCRIPT ENTRYPOINT ---
 def main():
     """
     If you run this file directly, we'll register some sample tasks, create a workflow, and run it.
@@ -473,6 +437,7 @@ def main():
     )
     try:
         orchestrator = WorkflowOrchestrator()
+        # Here's a couple of toy tasks to show how this works
         def sample_task_1(**kwargs):
             logger.info("Executing sample task 1")
             time.sleep(2)
@@ -485,18 +450,22 @@ def main():
             logger.info("Executing sample task 3")
             time.sleep(1)
             return {"result": "task_3_completed"}
+        # Register the tasks (like adding flights to the schedule)
         orchestrator.register_task("task_1", "Sample Task 1", sample_task_1)
         orchestrator.register_task("task_2", "Sample Task 2", sample_task_2, dependencies=["task_1"])
         orchestrator.register_task("task_3", "Sample Task 3", sample_task_3, dependencies=["task_1"])
+        # Create a workflow (a flight plan)
         workflow_id = orchestrator.create_workflow(
             "sample_workflow",
             ["task_1", "task_2", "task_3"],
             {"param1": "value1"}
         )
         logger.info(f"Created workflow: {workflow_id}")
+        # Run the workflow (let's see if it flies)
         execution = orchestrator.execute_workflow(workflow_id)
         logger.info(f"Workflow execution completed: {execution.status}")
         logger.info(f"Duration: {execution.duration_seconds} seconds")
+        # List all workflows (what's in the hangar?)
         workflows = orchestrator.list_workflows()
         logger.info(f"Available workflows: {len(workflows)}")
     except Exception as e:
