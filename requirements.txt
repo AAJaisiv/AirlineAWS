@@ -1,0 +1,86 @@
+# AirlineAWS - Airline Choice Prediction Using AWS
+# Core Data Engineering and Machine Learning Dependencies
+
+# AWS SDK and Cloud Services
+boto3>=1.34.0
+botocore>=1.34.0
+aws-cdk-lib>=2.0.0
+aws-cdk.aws-s3>=2.0.0
+aws-cdk.aws-redshift>=2.0.0
+aws-cdk.aws-glue>=2.0.0
+aws-cdk.aws-lambda>=2.0.0
+aws-cdk.aws-sagemaker>=2.0.0
+aws-cdk.aws-stepfunctions>=2.0.0
+aws-cdk.aws-cloudwatch>=2.0.0
+
+# Data Processing and Analysis
+pandas>=2.0.0
+numpy>=1.24.0
+pyspark>=3.4.0
+delta-spark>=2.4.0
+pyarrow>=12.0.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+xgboost>=1.7.0
+lightgbm>=4.0.0
+tensorflow>=2.13.0
+keras>=2.13.0
+
+# Data Validation and Quality
+great-expectations>=0.17.0
+pydantic>=2.0.0
+marshmallow>=3.20.0
+
+# API and Web Services
+requests>=2.31.0
+aiohttp>=3.8.0
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+
+# Database and Data Storage
+psycopg2-binary>=2.9.0
+sqlalchemy>=2.0.0
+redis>=4.6.0
+
+# Workflow and Orchestration
+apache-airflow>=2.7.0
+apache-airflow-providers-amazon>=8.0.0
+apache-airflow-providers-postgres>=5.0.0
+
+# Monitoring and Logging
+prometheus-client>=0.17.0
+structlog>=23.0.0
+python-json-logger>=2.0.0
+
+# Configuration and Environment
+python-dotenv>=1.0.0
+pyyaml>=6.0
+click>=8.1.0
+
+# Testing and Development
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0
+
+# Jupyter and Notebooks
+jupyter>=1.0.0
+ipykernel>=6.25.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+
+# Utilities
+tqdm>=4.65.0
+python-dateutil>=2.8.0
+pytz>=2023.3
+cryptography>=41.0.0
+
+# Documentation
+sphinx>=7.0.0
+sphinx-rtd-theme>=1.3.0
+myst-parser>=2.0.0 

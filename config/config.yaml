@@ -1,0 +1,280 @@
+# AirlineAWS Configuration File
+# This file contains all configuration settings for the data engineering pipeline
+
+# AWS Configuration
+aws:
+  region: "us-east-1"
+  profile: "default"
+  
+  # S3 Configuration
+  s3:
+    raw_bucket: "airlineaws-raw-data"
+    processed_bucket: "airlineaws-processed-data"
+    ml_bucket: "airlineaws-ml-models"
+    logs_bucket: "airlineaws-logs"
+    
+    # Data Lake Structure
+    data_lake:
+      bronze: "bronze"
+      silver: "silver"
+      gold: "gold"
+      
+  # Redshift Configuration
+  redshift:
+    cluster_identifier: "airlineaws-cluster"
+    database_name: "airlineaws_db"
+    master_username: "admin"
+    node_type: "dc2.large"
+    number_of_nodes: 2
+    
+  # Glue Configuration
+  glue:
+    database_name: "airlineaws_glue_db"
+    crawler_name: "airlineaws-crawler"
+    job_name: "airlineaws-etl-job"
+    
+  # Lambda Configuration
+  lambda:
+    function_name: "airlineaws-data-ingestion"
+    runtime: "python3.9"
+    timeout: 300
+    memory_size: 512
+    
+  # SageMaker Configuration
+  sagemaker:
+    role_name: "AirlineAWS-SageMaker-Role"
+    notebook_instance: "airlineaws-notebook"
+    endpoint_name: "airlineaws-prediction-endpoint"
+    
+  # Step Functions Configuration
+  step_functions:
+    state_machine_name: "AirlineAWS-Pipeline"
+    
+  # CloudWatch Configuration
+  cloudwatch:
+    log_group_name: "/aws/airlineaws"
+    metric_namespace: "AirlineAWS"
+
+# API Configuration
+api:
+  aviation_stack:
+    base_url: "http://api.aviationstack.com/v1"
+    access_key: "${AVIATION_STACK_API_KEY}"
+    rate_limit: 100  # requests per month (free tier)
+    
+  opensky:
+    base_url: "https://opensky-network.org/api"
+    username: "${OPENSKY_USERNAME}"
+    password: "${OPENSKY_PASSWORD}"
+    rate_limit: 10  # requests per second
+    
+  # API Endpoints
+  endpoints:
+    flights: "/flights"
+    airports: "/airports"
+    airlines: "/airlines"
+    aircraft: "/aircraft"
+
+# Data Processing Configuration
+data_processing:
+  # Batch Processing
+  batch:
+    schedule: "0 */6 * * *"  # Every 6 hours
+    batch_size: 1000
+    max_retries: 3
+    
+  # Real-time Processing
+  realtime:
+    enabled: true
+    interval: 300  # 5 minutes
+    buffer_size: 100
+    
+  # Data Quality
+  quality:
+    min_completeness: 0.95
+    max_null_percentage: 0.05
+    required_fields:
+      - "flight.number"
+      - "departure.airport"
+      - "arrival.airport"
+      - "airline.name"
+
+# Machine Learning Configuration
+ml:
+  # Model Configuration
+  models:
+    airport_choice:
+      algorithm: "xgboost"
+      hyperparameters:
+        max_depth: 6
+        learning_rate: 0.1
+        n_estimators: 100
+        
+    airline_preference:
+      algorithm: "lightgbm"
+      hyperparameters:
+        num_leaves: 31
+        learning_rate: 0.05
+        n_estimators: 100
+        
+    booking_likelihood:
+      algorithm: "random_forest"
+      hyperparameters:
+        n_estimators: 200
+        max_depth: 10
+        min_samples_split: 5
+        
+  # Training Configuration
+  training:
+    test_size: 0.2
+    validation_size: 0.1
+    random_state: 42
+    cv_folds: 5
+    
+  # Feature Engineering
+  features:
+    time_features:
+      - "hour_of_day"
+      - "day_of_week"
+      - "month"
+      - "season"
+      
+    flight_features:
+      - "route_distance"
+      - "flight_duration"
+      - "delay_probability"
+      - "price_category"
+      
+    airport_features:
+      - "airport_popularity"
+      - "connection_count"
+      - "geographic_region"
+      
+    airline_features:
+      - "airline_reputation"
+      - "fleet_size"
+      - "route_coverage"
+
+# Orchestration Configuration
+orchestration:
+  # Airflow Configuration
+  airflow:
+    dag_id: "airlineaws_pipeline"
+    schedule_interval: "0 */6 * * *"
+    catchup: false
+    max_active_runs: 1
+    
+  # Step Functions Configuration
+  step_functions:
+    max_concurrency: 10
+    timeout_seconds: 3600
+
+# Monitoring Configuration
+monitoring:
+  # Metrics Configuration
+  metrics:
+    data_quality:
+      - "completeness_score"
+      - "accuracy_score"
+      - "consistency_score"
+      
+    pipeline_performance:
+      - "processing_time"
+      - "throughput"
+      - "error_rate"
+      
+    model_performance:
+      - "accuracy"
+      - "precision"
+      - "recall"
+      - "f1_score"
+      
+  # Alerting Configuration
+  alerts:
+    data_quality_threshold: 0.9
+    pipeline_failure_threshold: 0.05
+    model_performance_threshold: 0.8
+    
+  # Dashboard Configuration
+  dashboard:
+    refresh_interval: 300  # 5 minutes
+    retention_days: 30
+
+# Security Configuration
+security:
+  # Encryption
+  encryption:
+    s3_encryption: true
+    redshift_encryption: true
+    lambda_encryption: true
+    
+  # IAM Configuration
+  iam:
+    least_privilege: true
+    rotation_days: 90
+    
+  # Network Security
+  network:
+    vpc_enabled: true
+    private_subnets: true
+    security_groups: true
+
+# Development Configuration
+development:
+  # Local Development
+  local:
+    use_localstack: false
+    mock_apis: true
+    
+  # Testing Configuration
+  testing:
+    unit_tests: true
+    integration_tests: true
+    e2e_tests: true
+    
+  # Code Quality
+  code_quality:
+    linting: true
+    type_checking: true
+    formatting: true
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "json"
+  handlers:
+    - "console"
+    - "file"
+    - "cloudwatch"
+    
+  # Log Retention
+  retention:
+    console: "1 day"
+    file: "30 days"
+    cloudwatch: "90 days"
+
+# Environment-specific overrides
+environments:
+  development:
+    aws:
+      region: "us-east-1"
+    data_processing:
+      batch:
+        schedule: "0 */12 * * *"  # Every 12 hours for dev
+        
+  staging:
+    aws:
+      region: "us-east-1"
+    monitoring:
+      alerts:
+        data_quality_threshold: 0.85
+        
+  production:
+    aws:
+      region: "us-east-1"
+    data_processing:
+      batch:
+        schedule: "0 */2 * * *"  # Every 2 hours for prod
+    monitoring:
+      alerts:
+        data_quality_threshold: 0.95 
