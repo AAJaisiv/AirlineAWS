@@ -220,7 +220,6 @@ AirlineAWS/
 ├── README.md                    # Comprehensive project documentation
 ├── LICENSE                      # Project license
 ├── requirements.txt             # Python dependencies
-├── PROJECT_SUMMARY.md          # This file
 ├── config/
 │   └── config.yaml             # Configuration settings
 ├── infrastructure/
