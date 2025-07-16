@@ -282,7 +282,7 @@ AirlineAWS/
 
 ---
 
-**Note**: This project is designed as a prototype structure to showcase demonstrating real-world data engineering capabilities. All implementations follow industry best practices and are production-ready.
+**Note**: This project is implemented as a prototype structure to showcase demonstrating real-world data engineering capabilities. All implementations follow industry best practices and are production-ready.
 
 
 
