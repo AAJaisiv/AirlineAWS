@@ -1,7 +1,6 @@
 # AirlineAWS
 ## Airline Choice Prediction Using AWS - End-to-End Data Engineering Pipeline
 
-**By A Abhinav Jaisiv** | 💼 LinkedIn | 🐙 GitHub | 📧 [Your Email]
 
 ## Executive Overview
 
@@ -69,27 +68,7 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 - **Airline Data**: Fleet, routes, service quality metrics
 - **Aircraft Data**: Real-time position, speed, altitude
 
-## 🔧 Implementation Highlights
 
-### 1. Professional Code Quality
-- **Type Hints**: Full Python type annotations
-- **Error Handling**: Comprehensive exception management
-- **Logging**: Structured logging with multiple handlers
-- **Documentation**: Detailed docstrings and comments
-- **Testing**: Unit, integration, and E2E test coverage
-
-### 2. Production-Ready Features
-- **Rate Limiting**: Intelligent API call management
-- **Retry Logic**: Exponential backoff for failed requests
-- **Data Validation**: Schema validation and quality checks
-- **Monitoring**: Real-time pipeline health monitoring
-- **Security**: Encryption, IAM roles, and access controls
-
-### 3. Scalable Architecture
-- **Serverless**: Lambda functions for event-driven processing
-- **Auto-scaling**: CloudFormation templates for infrastructure
-- **Data Lake**: Medallion architecture for data organization
-- **Microservices**: Modular, maintainable code structure
 
 ## 📈 Business Value
 
@@ -104,11 +83,7 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 - **Cost Savings**: Optimized pricing and route selection
 - **Convenience**: Personalized travel suggestions
 
-### For Portfolio
-- **Technical Skills**: Demonstrates cloud architecture expertise
-- **Real-World Impact**: Shows ability to solve business problems
-- **Production Experience**: Enterprise-grade implementation
-- **Modern Practices**: Uses current industry best practices
+
 
 ## 🚀 Technical Achievements
 
@@ -186,47 +161,9 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 - **Predictive Maintenance**: Aircraft and equipment optimization
 - **Revenue Management**: Dynamic pricing and yield optimization
 
-## 📚 Portfolio Value
 
-### For Technical Recruiters
-- **Modern Tech Stack**: Demonstrates current industry knowledge
-- **Production Experience**: Shows ability to build real-world solutions
-- **Problem Solving**: Addresses complex business challenges
-- **Code Quality**: Professional development practices
 
-### For Hiring Managers
-- **Business Impact**: Clear value proposition and ROI
-- **Scalability**: Enterprise-grade architecture
-- **Maintainability**: Well-structured, documented code
-- **Innovation**: Creative use of cloud technologies
-
-### For Data Engineering Roles
-- **End-to-End Pipeline**: Complete data engineering lifecycle
-- **Cloud Expertise**: AWS services and best practices
-- **ML Integration**: Data science and engineering collaboration
-- **Production Deployment**: Real-world implementation experience
-
-## 🏆 Project Highlights
-
-### Innovation
-- **Multi-API Integration**: Combines multiple aviation data sources
-- **Real-time Processing**: Live data ingestion and analysis
-- **Predictive Analytics**: ML-powered business insights
-- **Cloud-Native Design**: Modern, scalable architecture
-
-### Quality
-- **Professional Code**: Production-ready implementation
-- **Comprehensive Testing**: Full test coverage
-- **Documentation**: Detailed technical documentation
-- **Security**: Enterprise-grade security practices
-
-### Impact
-- **Business Value**: Clear ROI and business benefits
-- **Scalability**: Handles enterprise-scale data volumes
-- **Reliability**: High availability and fault tolerance
-- **Maintainability**: Modular, well-structured codebase
-
-## 🚀 Quick Start
+## 🚀 Quick Start for Open source
 
 ### Prerequisites
 - Python 3.9+
@@ -299,32 +236,12 @@ AirlineAWS/
 - **Processing Speed**: Real-time data processing <5 minutes
 - **Scalability**: Handle 10x data volume increase
 
-## 📞 Contact & Resources
 
-- **GitHub**: [https://github.com/AAJaisiv/AirlineAWS](https://github.com/AAJaisiv/AirlineAWS)
-- **Documentation**: Comprehensive setup and technical guides in `docs/`
-- **Demo**: Live demonstration of the pipeline
-- **Code Review**: Open for technical review and feedback
-
-## 🏆 Portfolio Value
-
-**AirlineAWS** represents a comprehensive demonstration of modern data engineering capabilities, showcasing expertise in cloud architecture, machine learning, and production-ready software development. This project serves as an excellent portfolio piece for data engineering and cloud architecture roles.
-
-### For Technical Recruiters
-- **Modern Tech Stack**: Demonstrates current industry knowledge
-- **Production Experience**: Shows ability to build real-world solutions
-- **Problem Solving**: Addresses complex business challenges
-- **Code Quality**: Professional development practices
-
-### For Hiring Managers
-- **Business Impact**: Clear value proposition and ROI
-- **Scalability**: Enterprise-grade architecture
-- **Maintainability**: Well-structured, documented code
 - **Innovation**: Creative use of cloud technologies
 
 ---
 
-**Note**: This project is designed as a portfolio showcase demonstrating real-world data engineering capabilities. All implementations follow industry best practices and are production-ready.
+**Note**: This project is designed as a prototype structure to showcase demonstrating real-world data engineering capabilities. All implementations follow industry best practices and are production-ready.
 
 
 
