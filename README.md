@@ -6,7 +6,7 @@
 
 **AirlineAWS** is a comprehensive, production-ready data engineering pipeline designed to predict passenger airport and airline choices using AWS cloud infrastructure. This project demonstrates expertise in modern data engineering practices, cloud computing, and machine learning operations (MLOps).
 
-## 🎯 Project Objectives
+##  Project Objectives
 
 ### Primary Goals
 1. **End-to-End Data Pipeline**: Build a scalable, automated data engineering pipeline
@@ -19,7 +19,7 @@
 - **Airline Preference**: Preferred airline selection based on historical data
 - **Booking Likelihood**: Probability of booking conversion
 
-## 🏗️ Technical Architecture
+##  Technical Architecture
 
 ### Cloud Infrastructure (AWS)
 - **Data Storage**: S3 (Bronze/Silver/Gold architecture) + Redshift data warehouse
@@ -49,7 +49,26 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 | **Infrastructure** | CloudFormation | Infrastructure as Code |
 | **Development** | Python, boto3 | Data processing and ML |
 
-## 📊 Data Sources & Integration
+
+
+## Data Flow Diagram
+
++-------------------+      +-------------------+      +-------------------+
+|  Aviation APIs    | ---> | Data Ingestion    | ---> |   S3 Bronze Layer |
++-------------------+      +-------------------+      +-------------------+
+                                                           |
+                                                           v
++-------------------+      +-------------------+      +-------------------+
+|   S3 Silver Layer | <--- | Data Processing   | <--- |   S3 Gold Layer   |
++-------------------+      +-------------------+      +-------------------+
+                                                           |
+                                                           v
++-------------------+      +-------------------+      +-------------------+
+| Machine Learning  | <--- | Monitoring &      | <--- | Orchestration     |
+|   (ModelTrainer)  |      | Alerting          |      | (Workflow Engine) |
++-------------------+      +-------------------+      +-------------------+
+
+##  Data Sources & Integration
 
 ### Aviation APIs
 1. **Aviation Stack API** (Primary)
@@ -70,7 +89,7 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 
 
 
-## 📈 Business Value
+##  Business Value
 
 ### For Airlines
 - **Route Optimization**: Identify popular routes and optimize capacity
@@ -85,7 +104,7 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 
 
 
-## 🚀 Technical Achievements
+##  Technical Achievements
 
 ### Infrastructure as Code
 - **CloudFormation Templates**: Complete infrastructure automation
@@ -130,7 +149,7 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 - **Compliance**: Industry-standard security practices
 - **Maintainability**: Modular, well-documented codebase
 
-## 🎓 Learning Outcomes
+##  Learning Outcomes
 
 ### Technical Skills Demonstrated
 1. **Cloud Architecture**: AWS services and best practices
@@ -147,7 +166,7 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 4. **Communication**: Clear technical explanations
 5. **Attention to Detail**: Production-ready implementation
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
 ### Phase 2: Advanced Features
 - **Real-time Dashboard**: Live monitoring and analytics
@@ -163,7 +182,7 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 
 
 
-## 🚀 Quick Start for Open source
+##  Quick Start for Open source
 
 ### Prerequisites
 - Python 3.9+
@@ -188,31 +207,48 @@ python scripts/deploy_infrastructure.py --action deploy
 2. Update `.env` file with your credentials
 3. Configure AWS CLI with appropriate permissions
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 AirlineAWS/
-├── README.md                           # Project documentation
-├── requirements.txt                    # Python dependencies
+├── README.md                    # Comprehensive project documentation
+├── LICENSE                      # Project license
+├── requirements.txt             # Python dependencies
+├── PROJECT_SUMMARY.md          # This file
 ├── config/
-│   └── config.yaml                     # Configuration file
+│   └── config.yaml             # Configuration settings
 ├── infrastructure/
-│   └── cloudformation/
-│       └── main.yaml                   # CloudFormation template
+│   └── cloudformation.yaml     # AWS infrastructure template
 ├── src/
-│   ├── data_ingestion/                 # Data ingestion modules
-│   ├── data_processing/                # ETL and data processing
-│   ├── machine_learning/               # ML models and training
-│   ├── orchestration/                  # Airflow DAGs and workflows
-│   └── monitoring/                     # Monitoring and alerting
-├── notebooks/                          # Jupyter notebooks
-├── tests/                             # Unit and integration tests
-├── docs/                              # Detailed documentation
-├── scripts/                           # Utility scripts
-└── .env                               # Environment variables
+│   ├── __init__.py             # Main package initialization
+│   ├── data_ingestion/
+│   │   ├── __init__.py
+│   │   └── aviation_api_client.py  # API client with rate limiting
+│   ├── data_processing/
+│   │   ├── __init__.py
+│   │   └── etl_pipeline.py     # ETL pipeline with data quality
+│   ├── machine_learning/
+│   │   ├── __init__.py
+│   │   └── model_trainer.py    # ML model training & deployment
+│   ├── monitoring/
+│   │   ├── __init__.py
+│   │   └── pipeline_monitor.py # Monitoring & alerting system
+│   └── orchestration/
+│       ├── __init__.py
+│       └── workflow_orchestrator.py  # Workflow orchestration
+├── tests/
+│   ├── __init__.py
+│   └── test_pipeline_integration.py  # Integration tests
+├── scripts/
+│   ├── deploy.sh               # Deployment script
+│   └── quick_start.sh          # Quick start script
+└── docs/
+    ├── setup_guide.md          # Setup instructions
+    ├── api_research.md         # API research documentation
+    └── architecture_diagrams/  # Architecture diagrams
 ```
 
-## 🔧 Key Features
+##  Key Features
 
 - **Real-time Data Processing**: Streaming data ingestion and processing
 - **Data Quality Assurance**: Comprehensive validation and monitoring
@@ -220,7 +256,7 @@ AirlineAWS/
 - **Scalable Infrastructure**: Cloud-native architecture for growth
 - **Professional Monitoring**: Business intelligence and operational dashboards
 
-## 📈 Expected Outcomes
+##  Expected Outcomes
 
 - **Fully Automated Pipeline**: End-to-end data processing without manual intervention
 - **Scalable Architecture**: Handles increasing data volumes efficiently
@@ -228,7 +264,7 @@ AirlineAWS/
 - **Comprehensive Monitoring**: Real-time visibility into pipeline health
 - **Professional Documentation**: Portfolio-ready project showcase
 
-## 🎯 Success Metrics
+##  Success Metrics
 
 - **Data Quality**: 99.9% data accuracy and completeness
 - **Pipeline Reliability**: 99.5% uptime with automated recovery
