@@ -53,6 +53,8 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 
 ## Data Flow Diagram
 
+
+
 +-------------------+      +-------------------+      +-------------------+
 |  Aviation APIs    | ---> | Data Ingestion    | ---> |   S3 Bronze Layer |
 +-------------------+      +-------------------+      +-------------------+
@@ -67,6 +69,10 @@ Bronze Layer (Raw Data) → Silver Layer (Cleaned Data) → Gold Layer (Business
 | Machine Learning  | <--- | Monitoring &      | <--- | Orchestration     |
 |   (ModelTrainer)  |      | Alerting          |      | (Workflow Engine) |
 +-------------------+      +-------------------+      +-------------------+
+
+
+
+
 
 ##  Data Sources & Integration
 
