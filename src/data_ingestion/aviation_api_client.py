@@ -1,12 +1,9 @@
 """
-Aviation API Client for AirlineAWS Project
 
 This script is the main bridge between our pipeline and the outside world of aviation data.
 It fetches flights, airports, and airlines info from public APIs, handles rate limits, retries,
 and pushes the results to S3. If you ever wondered where our data journey begins—it's here.
 
-Author: A Abhinav Jaisiv
-Date: 2025
 """
 
 import os
