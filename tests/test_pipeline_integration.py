@@ -1,11 +1,9 @@
 """
 Integration Tests for AirlineAWS Pipeline
 
-This module provides comprehensive integration tests for the complete
+This provides comprehensive integration tests for the complete
 data engineering pipeline, demonstrating end-to-end functionality.
 
-Author: A Abhinav Jaisiv
-Date: 2025
 """
 
 import os
@@ -32,15 +30,14 @@ from orchestration.workflow_orchestrator import (
 
 
 class TestAirlineAWSPipelineIntegration(unittest.TestCase):
-    """Integration tests for the complete AirlineAWS pipeline."""
     
     def setUp(self):
-        """Set up test environment."""
+        """Setting up test environment."""
         # Configure logging
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
         
-        # Create temporary directory for test files
+        # Creating temporary directory for test files
         self.temp_dir = tempfile.mkdtemp()
         
         # Mock configuration
@@ -77,7 +74,6 @@ class TestAirlineAWSPipelineIntegration(unittest.TestCase):
             }
         }
         
-        # Sample flight data
         self.sample_flight_data = [
             {
                 'flight': {'number': 'AA123'},
@@ -126,7 +122,6 @@ class TestAirlineAWSPipelineIntegration(unittest.TestCase):
         ]
     
     def tearDown(self):
-        """Clean up test environment."""
         import shutil
         shutil.rmtree(self.temp_dir)
     
@@ -355,7 +350,7 @@ class TestAirlineAWSPipelineIntegration(unittest.TestCase):
             }
         ]
         
-        # Mock ETL pipeline for testing
+        # ETL pipeline for testing
         with patch('builtins.open', create=True) as mock_open:
             mock_open.return_value.__enter__.return_value.read.return_value = json.dumps(self.mock_config)
             

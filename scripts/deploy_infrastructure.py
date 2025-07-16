@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-AWS Infrastructure Deployment Script for AirlineAWS
 
 This script deploys the complete AWS infrastructure for the AirlineAWS
 data engineering pipeline using CloudFormation templates.
 
-Author: A Abhinav Jaisiv
-Date: 2025
 """
 
 import os

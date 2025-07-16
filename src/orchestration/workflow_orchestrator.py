@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 import boto3
 from botocore.exceptions import ClientError
 import yaml
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from enum import Enum
 import time
 import threading
@@ -52,12 +52,12 @@ class TaskDefinition:
     task_id: str
     task_name: str
     function_name: str
-    dependencies: List[str]
+    dependencies: List[str] = field(default_factory=list)
     timeout_seconds: int = 3600
     retry_count: int = 3
     retry_delay_seconds: int = 60
     required: bool = True
-    parameters: Dict[str, Any] = None
+    parameters: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
 class TaskExecution:
@@ -80,8 +80,8 @@ class WorkflowExecution:
     start_time: datetime
     end_time: Optional[datetime] = None
     duration_seconds: Optional[float] = None
-    tasks: Dict[str, TaskExecution] = None
-    parameters: Dict[str, Any] = None
+    tasks: Dict[str, TaskExecution] = field(default_factory=dict)
+    parameters: Dict[str, Any] = field(default_factory=dict)
     error_message: Optional[str] = None
 
 # --- MAIN ORCHESTRATOR CLASS ---
@@ -393,7 +393,7 @@ class WorkflowOrchestrator:
         execution.duration_seconds = (execution.end_time - execution.start_time).total_seconds()
         for task_execution in execution.tasks.values():
             if task_execution.status == TaskStatus.RUNNING:
-                task_execution.status = TaskStatus.CANCELLED
+                task_execution.status = WorkflowStatus.CANCELLED
         del self.active_executions[workflow_id]
         self.execution_history.append(execution)
         self._save_execution_result(execution)
