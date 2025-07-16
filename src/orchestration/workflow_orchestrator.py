@@ -8,7 +8,7 @@ smoothly. If you want to know how we keep chaos at bay, this is the place.
 ---
 Hey there! If you're reading this, you're probably curious about how we keep our AWS data pipeline from turning into a mid-air collision. This file is the brains of the operation: it figures out what runs when, makes sure nothing steps on anything else's toes, and generally keeps the whole show on the rails (or, uh, in the air?).
 
-You'll find a mix of classes, enums, and a main() that shows off how to use it. Comments are written like I'm talking to you at the whiteboard. If you spot something weird, it's probably because I was trying to make this as clear as possible for the next person (hi, recruiter!).
+You'll find a mix of classes, enums, and a main() that shows off how to use it.
 """
 
 import os

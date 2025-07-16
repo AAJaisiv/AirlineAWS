@@ -1,12 +1,10 @@
 """
-ETL Pipeline for AirlineAWS Project
+ETL Pipeline 
 
-This script is the heart of our data kitchen. It takes raw aviation data (bronze),
+It takes raw aviation data (bronze),
 cleans and transforms it (silver), and gets it ready for business and ML (gold).
 If you want to know how our data gets from messy to meaningful, this is the place.
 
-Author: A Abhinav Jaisiv
-Date: 2025
 """
 
 import os

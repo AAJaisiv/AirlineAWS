@@ -1,12 +1,9 @@
 """
-Pipeline Monitoring for AirlineAWS Project
 
 This script is our pipeline's health dashboard and alarm system. It tracks metrics,
 raises alerts if something's off, and helps us keep an eye on the whole data flow.
 If you want to know if the pipeline is happy, this is where you look.
 
-Author: A Abhinav Jaisiv
-Date: 2025
 """
 
 import os
