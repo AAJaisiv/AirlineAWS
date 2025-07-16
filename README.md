@@ -272,7 +272,8 @@ AirlineAWS/
 
 ## Mock-up Dashboard (replica) 
 
-https://sdmntpreastus2.oaiusercontent.com/files/00000000-e760-61f6-98db-108f652dbf54/raw?se=2025-07-16T03%3A51%3A34Z&sp=r&sv=2024-08-04&sr=b&scid=e0ad0790-174e-5976-ab08-1ebbf14dc01f&skoid=31bc9c1a-c7e0-460a-8671-bf4a3c419305&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-16T03%3A13%3A05Z&ske=2025-07-17T03%3A13%3A05Z&sks=b&skv=2024-08-04&sig=blUVg5gq7nk8OCU7AuecdNIv4sOtPiwUrNY1Qou5Jjg%3D<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/ba5b49a2-ec1b-4258-9f2e-3de44272fe70" />
+
+<img width="820" height="820" alt="image" src="https://github.com/user-attachments/assets/ba5b49a2-ec1b-4258-9f2e-3de44272fe70" />
 
 ##  Success Metrics
 
