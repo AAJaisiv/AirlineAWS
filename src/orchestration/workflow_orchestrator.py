@@ -1,14 +1,10 @@
 """
 Workflow Orchestration
 
-This script is the air traffic controller for our data pipeline. It manages which
+This is the air traffic controller for our data pipeline. It manages which
 tasks run when, makes sure dependencies are respected, and keeps everything moving
 smoothly. If you want to know how we keep chaos at bay, this is the place.
 
----
-Hey there! If you're reading this, you're probably curious about how we keep our AWS data pipeline from turning into a mid-air collision. This file is the brains of the operation: it figures out what runs when, makes sure nothing steps on anything else's toes, and generally keeps the whole show on the rails (or, uh, in the air?).
-
-You'll find a mix of classes, enums, and a main() that shows off how to use it.
 """
 
 import os
@@ -87,7 +83,7 @@ class WorkflowExecution:
 # --- MAIN ORCHESTRATOR CLASS ---
 class WorkflowOrchestrator:
     """
-    This class is our pipeline's air traffic controller. It registers tasks, builds workflows,
+    This is our pipeline's air traffic controller. It registers tasks, builds workflows,
     checks dependencies, and makes sure everything runs in the right order.
     """
     def __init__(self, config_path: str = "config/config.yaml"):
@@ -429,7 +425,7 @@ class WorkflowOrchestrator:
 # --- MAIN SCRIPT ENTRYPOINT ---
 def main():
     """
-    If you run this file directly, we'll register some sample tasks, create a workflow, and run it.
+    If we run this file directly, we'll register some sample tasks, create a workflow, and run it.
     """
     logging.basicConfig(
         level=logging.INFO,

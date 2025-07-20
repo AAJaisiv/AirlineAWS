@@ -1,6 +1,6 @@
 """
 
-This script is the main bridge between our pipeline and the outside world of aviation data.
+This is the main bridge between our pipeline and the outside world of aviation data.
 It fetches flights, airports, and airlines info from public APIs, handles rate limits, retries,
 and pushes the results to S3. If you ever wondered where our data journey begins—it's here.
 
@@ -62,7 +62,7 @@ class AviationAPIClient:
 
     def _create_session(self) -> requests.Session:
         """
-        Sets up a requests session with retry logic. This way, if the API is flaky, we don't give up right away.
+        Setting up a requests session with retry logic. This way, if the API is flaky, we don't give up right away.
         """
         session = requests.Session()
         retry_strategy = Retry(
@@ -112,10 +112,10 @@ class AviationAPIClient:
 
     def get_flights(self, limit: int = 100, offset: int = 0) -> List[Dict[str, Any]]:
         """
-        Fetches real-time flight data from Aviation Stack. Limit is capped at 100 by the API.
+        Fetches real-time flight data from Aviation Stack. Limit is capped at 100.
         """
         if not self.aviation_stack_key:
-            raise ValueError("Missing Aviation Stack API key. Set AVIATION_STACK_API_KEY in your environment.")
+            raise ValueError("Missing Aviation Stack API key. Set AVIATION_STACK_API_KEY.")
         params = {
             'access_key': self.aviation_stack_key,
             'limit': min(limit, 100),
@@ -133,10 +133,10 @@ class AviationAPIClient:
 
     def get_airports(self, country_code: Optional[str] = None) -> List[Dict[str, Any]]:
         """
-        Fetches airport info. You can filter by country if you want.
+        Fetches airport info. ALso can filter by country.
         """
         if not self.aviation_stack_key:
-            raise ValueError("Missing Aviation Stack API key. Set AVIATION_STACK_API_KEY in your environment.")
+            raise ValueError("Missing Aviation Stack API key. Set AVIATION_STACK_API_KEY.")
         params = {'access_key': self.aviation_stack_key}
         if country_code:
             params['country_code'] = country_code
@@ -155,7 +155,7 @@ class AviationAPIClient:
         Fetches airline info from Aviation Stack.
         """
         if not self.aviation_stack_key:
-            raise ValueError("Missing Aviation Stack API key. Set AVIATION_STACK_API_KEY in your environment.")
+            raise ValueError("Missing Aviation Stack API key. Set AVIATION_STACK_API_KEY.")
         params = {'access_key': self.aviation_stack_key}
         url = f"{self.aviation_stack_base_url}{self.config['api']['endpoints']['airlines']}"
         try:
@@ -205,7 +205,7 @@ class AviationAPIClient:
 
     def collect_daily_data(self) -> Dict[str, List[Dict[str, Any]]]:
         """
-        Orchestrates a daily data pull from all sources. This is the main entry point for our pipeline's data ingestion.
+        Orchestrates a daily data pull from all sources. This is the main entry point for the pipeline's data ingestion.
         """
         logger.info("Starting daily data collection...")
         all_data = {}
@@ -227,7 +227,7 @@ class AviationAPIClient:
         s3 = boto3.client('s3')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         for key, records in data.items():
-            s3_key = f"{prefix}/{key}_{timestamp}.json"
+            s3_key = f"{prefix}/{key}_{timestamp}.json" # S3 
             try:
                 s3.put_object(
                     Bucket=bucket_name,

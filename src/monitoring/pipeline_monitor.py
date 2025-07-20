@@ -1,8 +1,8 @@
 """
 
-This script is our pipeline's health dashboard and alarm system. It tracks metrics,
+This is our pipeline's health dashboard and alarm system. It tracks metrics,
 raises alerts if something's off, and helps us keep an eye on the whole data flow.
-If you want to know if the pipeline is happy, this is where you look.
+If we want to know if the pipeline is happy, this is where we look.
 
 """
 
@@ -48,7 +48,7 @@ class AlertConfig:
 
 class PipelineMonitor:
     """
-    This class is our pipeline's health monitor. It records metrics, checks for problems,
+    This is our pipeline's health monitor. It records metrics, checks for problems,
     and can even send out alerts if things go sideways.
     """
     def __init__(self, config_path: str = "config/config.yaml"):
