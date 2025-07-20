@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 class DataQualityConfig(BaseModel):
     """
-    Holds our data quality rules. Think of it as the checklist for what makes
+    Holds our data quality rules.  its like a checklist for what makes
 data "good enough" to move forward.
     """
     min_completeness: float = 0.95
@@ -67,7 +67,7 @@ class ETLPipeline:
 
     def extract_from_bronze(self, data_type: str, date: Optional[str] = None) -> List[Dict[str, Any]]:
         """
-        Pulls raw data from S3 (bronze layer). If you want to see the mess before the magic, start here.
+        Pulls raw data from S3 (bronze layer).
         """
         logger.info(f"Extracting {data_type} data from Bronze layer")
         try:
@@ -360,7 +360,7 @@ class ETLPipeline:
 
 def main():
     """
-    If you run this file directly, we'll do a quick ETL run and print a summary.
+    we'll do a quick ETL run and print a summary.
     """
     logging.basicConfig(
         level=logging.INFO,
